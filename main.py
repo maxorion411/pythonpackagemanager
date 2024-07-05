@@ -30,6 +30,14 @@ def uninstall_package(package_name):
         subprocess.run(['pip', 'uninstall', package_name, '-y'])
         refresh_package_list()
 
+def uninstall_all_packages():
+    confirm = messagebox.askyesno("Confirm Uninstall All", "Are you sure you want to uninstall all packages?")
+    if confirm:
+        packages = get_installed_packages()
+        for package in packages:
+            subprocess.run(['pip', 'uninstall', package, '-y'])
+        refresh_package_list()
+
 # Tạo cửa sổ chính
 root = tk.Tk()
 root.title("Python Package Manager")
@@ -53,6 +61,10 @@ frame_list.bind("<Configure>", on_frame_configure)
 # Tạo nút để làm mới danh sách gói
 refresh_button = tk.Button(root, text="Refresh List", command=refresh_package_list)
 refresh_button.pack(pady=10)
+
+# Tạo nút để gỡ cài đặt tất cả gói
+uninstall_all_button = tk.Button(root, text="Uninstall All", command=uninstall_all_packages)
+uninstall_all_button.pack(pady=10)
 
 # Tải danh sách gói ban đầu
 refresh_package_list()
